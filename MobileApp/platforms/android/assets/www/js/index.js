@@ -40,7 +40,16 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-    }
+    },
+
 };
 
 app.initialize();
+
+
+function startTask(){
+    document.getElementsById("startButton").innerHTML = "Stopit";
+
+    cordova.plugins.backgroundMode.enable();
+    alert(cordova.plugins.backgroundMode.isActive());
+}
