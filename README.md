@@ -8,20 +8,20 @@ Da Background-Jobs im Hintergrund Ressourcen belasten, werden diese von den vers
 
 ### Android
 
-Android setzt ab der Version 8 (API level) Restriktionen zur Verwendung von Background Jobs ein.
+Android setzt ab der Version 8 (API Level 26) Restriktionen zur Verwendung von Background Jobs ein.
 Backgroundjobs dürfen und können nun nur noch innerhalb eines bestimmten Zeitfensters laufen. Bei Ende dieses, wird der Prozess beendet. Die Prozesse einer Vordergrundapp hingegen haben keine Einschränkungen bezüglich der Laufzeit.  
 
 Eine App gilt als Vordergrundapp, sofern eine der folgenden Punkte gilt:
 
 - Es existiert eine sichtbare Oberfläche
-- Es gibt Vordergrundprozesse
-- Eine andere Vordergrundapp ist mit der App verbunden.
+- Es existieren Vordergrund-Prozesse
+- Eine andere Vordergrund-Applikation ist mit der App verbunden.
 
 Quelle: https://developer.android.com/about/versions/oreo/background.html
 
 ### IOS
 
-Zur Zulassung der App in den Appstore wird folgendes bezüglich Backgroundapps beschrieben:
+Zur Zulassung der App in den Appstore wird Folgendes bezüglich Backgroundapps beschrieben:
 
     2.5.4 Multitasking apps may only use background services for their intended 
     purposes: VoIP, audio playback, location, task completion, local notifications, 
@@ -35,7 +35,7 @@ So wird lediglich für folgende App-Typen eine Verwendung von Backgroundtask vor
 - Applikationen, welche den Nutzer über seine Position informieren (Navigationsanwendungen)
 - Apps basierend auf VoIP
 - Apps, welche etwas downloaden müssen
-- Apps, welche regelmäßige Updates emfangen muss
+- Apps, welche regelmäßige Updates empfangen muss
 
 Die Applikationen, die Backgroundservices implementieren, müssen diesen Service explizit definieren. Dies funktioniert über das setzen eines Backgroundmodus.
 
@@ -47,8 +47,8 @@ Quelle: https://developer.apple.com/library/content/documentation/iPhone/Concept
 Im Minimalbeispiel wird ein einfacher Background Service erzeugt. Dieser wirft eine Konsolenausgabe im Hintergrund. Als Cordova Package wird dabei das `Cordova-Plugin-Background-Mode`-Plugin verwand. (
 https://github.com/katzer/cordova-plugin-background-mode)
 
-Die Implementierung findet im Beispiel lediglich in der index.js-Datei statt. 
-Um das Plugin zu verwenden, ist es von Nöten den BackgroundMode zu aktivieren. Dies funktioniert über die Funktion: `cordova.plugins.backgroundMode.enable();`
+Die Implementierung findet im Beispiel lediglich in der `index.js`- Datei statt. 
+Um das Plugin zu verwenden, ist es von Nöten den BackgroundMode zu aktivieren. Dies funktioniert über die Funktion: `cordova.plugins.backgroundMode.enable()`.
 In der `onDeviceReady`- Funktion werden folgende fünf Listener gestartet:
 
 - **onActivate** Wird ausgeführt, wenn die Applikation in den Hintergrund geht.
@@ -65,6 +65,8 @@ In der `onDeviceReady`- Funktion werden folgende fünf Listener gestartet:
 
  ![Heavy Tasks](https://raw.githubusercontent.com/sukram42/mobile1_pfisterer_backgroundjobs/master/readme-img/heavy.jpg)
  
-
+ Für Android speziell enthält das Plugin weitere Funktionen wie zum Beispiel das Überschreiben der Funktion des Backbuttons, das in den Vordergrundschieben von Anwendungen und vieles mehr. Dafür die Dokumentation des Git-Repository beachten.
+ 
+ 
 ### Dependencies
 https://github.com/katzer/cordova-plugin-background-mode
