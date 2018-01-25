@@ -16,9 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+var stop = false;
+
 var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     },
 
@@ -26,19 +29,65 @@ var app = {
     //
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
-    onDeviceReady: function() {
+    onDeviceReady: function () {
         this.receivedEvent('deviceready');
+
+        /*
+         * Enables Backgroundmode, so the plugin is available
+         */
+        cordova.plugins.backgroundMode.enable();
+        console.log("Lets test da shiet");
+
+        /**
+         * This Eventlistener will be called, when the App gets into the foreground and the Background-mode will be deactivate.
+         */
+        cordova.plugins.backgroundMode.on('deactivate', () => {
+            console.log("deactivate");
+            stop = true;
+        });
+        /**
+         * This Eventlistener will be called when an error occurs.
+         */
+        cordova.plugins.backgroundMode.on('failure', (err) => {
+            console.log("Failure", err);
+            stop = true;
+        });
+        /**
+         * This Eventlistener will be called, when the background-mode will be activated.
+         */
+        cordova.plugins.backgroundMode.on('activate', () => {
+            console.log("Activate");
+            myBackgroundTask();
+        });
+        /**
+         * This Eventlistener will be called when the background-mode will be enabled.
+         */
+        cordova.plugins.backgroundMode.on('enable', () => {
+            console.log("enable");
+        });
+        /**
+         * This Eventlistener will be called when the background-mode will be disabled.
+         */
+        cordova.plugins.backgroundMode.on('disable', () => {
+            console.log("disable");
+        });
+
+        cordova.plugins.backgroundMode.enable();
+        console.log("Lets test da shiet");
     },
 
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
+    receivedEvent: function (id) {
         var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+        if (parentElement != null) {
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+            var listeningElement = parentElement.querySelector('.listening');
+            var receivedElement = parentElement.querySelector('.received');
 
+            listeningElement.setAttribute('style', 'display:none;');
+            receivedElement.setAttribute('style', 'display:block;');
+
+        }
         console.log('Received Event: ' + id);
     },
 
@@ -46,10 +95,11 @@ var app = {
 
 app.initialize();
 
+/**
+ * Function will be called, when the App goes into the Background.
+ *
+ */
+function myBackgroundTask() {
 
-function startTask(){
-    document.getElementsById("startButton").innerHTML = "Stopit";
-
-    cordova.plugins.backgroundMode.enable();
-    alert(cordova.plugins.backgroundMode.isActive());
+    setTimeout(()=>console.log("I am in the back"),4000);
 }

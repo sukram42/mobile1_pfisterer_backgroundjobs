@@ -16,9 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+
 var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     },
 
@@ -26,19 +28,63 @@ var app = {
     //
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
-    onDeviceReady: function() {
+    onDeviceReady: function () {
         this.receivedEvent('deviceready');
+
+        /*
+         * Enables Backgroundmode, so the plugin is available
+         */
+        cordova.plugins.backgroundMode.enable();
+        console.log("Lets test da shiet");
+
+        /**
+         * This Eventlistener will be called, when the App gets into the foreground and the Background-mode will be deactivate.
+         */
+        cordova.plugins.backgroundMode.on('deactivate', () => {
+            console.log("deactivate");
+        });
+        /**
+         * This Eventlistener will be called when an error occurs.
+         */
+        cordova.plugins.backgroundMode.on('failure', (err) => {
+            console.log("Failure", err);
+        });
+        /**
+         * This Eventlistener will be called, when the background-mode will be activated.
+         */
+        cordova.plugins.backgroundMode.on('activate', () => {
+            console.log("Activate");
+            myBackgroundTask();
+        });
+        /**
+         * This Eventlistener will be called when the background-mode will be enabled.
+         */
+        cordova.plugins.backgroundMode.on('enable', () => {
+            console.log("enable");
+        });
+        /**
+         * This Eventlistener will be called when the background-mode will be disabled.
+         */
+        cordova.plugins.backgroundMode.on('disable', () => {
+            console.log("disable");
+        });
+
+        cordova.plugins.backgroundMode.enable();
+        console.log("Lets test da shiet");
     },
 
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
+    receivedEvent: function (id) {
         var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+        if (parentElement != null) {
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+            var listeningElement = parentElement.querySelector('.listening');
+            var receivedElement = parentElement.querySelector('.received');
 
+            listeningElement.setAttribute('style', 'display:none;');
+            receivedElement.setAttribute('style', 'display:block;');
+
+        }
         console.log('Received Event: ' + id);
     },
 
@@ -47,5 +93,13 @@ var app = {
 app.initialize();
 
 
-function startTask(){
+/**
+ * Function will be called, when the App goes into the Background.
+ *
+ */
+function myBackgroundTask() {
+    //In this example there will be an console output, which is going to appear 4 seconds after the method is called.
+    setTimeout(()=>{
+        console.log("I am a message from the background task");
+    },4000);
 }
