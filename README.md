@@ -62,7 +62,9 @@ In der `onDeviceReady`- Funktion werden folgende fünf Listener gestartet:
  
  Auf Android (getestet auf Version 6.0.1) wird bei Ausführen der Applikation folgendes Fenster angezeigt:
  
+
+ ![Heavy Tasks](https://raw.githubusercontent.com/sukram42/mobile1_pfisterer_backgroundjobs/master/readme-img/heavy.jpg)
  
 
-###Dependencies
+### Dependencies
 https://github.com/katzer/cordova-plugin-background-mode
