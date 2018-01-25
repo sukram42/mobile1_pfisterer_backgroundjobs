@@ -17,7 +17,6 @@
  * under the License.
  */
 
-var stop = false;
 
 var app = {
     // Application Constructor
@@ -43,14 +42,12 @@ var app = {
          */
         cordova.plugins.backgroundMode.on('deactivate', () => {
             console.log("deactivate");
-            stop = true;
         });
         /**
          * This Eventlistener will be called when an error occurs.
          */
         cordova.plugins.backgroundMode.on('failure', (err) => {
             console.log("Failure", err);
-            stop = true;
         });
         /**
          * This Eventlistener will be called, when the background-mode will be activated.
